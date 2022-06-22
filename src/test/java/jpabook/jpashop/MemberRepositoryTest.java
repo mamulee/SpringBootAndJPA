@@ -9,24 +9,24 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepositoryEx memberRepository;
 
     @Test
     @Transactional // Test에 있으면 정상 동작 후 바로 Roll back
     @Rollback(false)
     public void $NAMES() throws Exception {
         //given
-        Member member = new Member();
+        MemberEx member = new MemberEx();
         member.setUsername("memberA");
 
         //when
         Long saveId = memberRepository.save(member);
-        Member findMember = memberRepository.find(saveId);
+        MemberEx findMember = memberRepository.find(saveId);
 
         //then
         Assertions.assertThat(findMember.getId()).isEqualTo(member.getId());
