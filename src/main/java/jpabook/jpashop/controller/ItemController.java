@@ -63,18 +63,22 @@ public class ItemController {
     }
 
     @PostMapping("items/{itemId}/edit") // id에 취약점이 많아서, 악용을 방지하기 위해 사용자가 권한이 있느지 없는지 판단하는 법을 추가하는 것이 좋다.
-    public String updateItem(@ModelAttribute("form") BookForm form) {
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
 
-        Book book = new Book();
+//        Book book = new Book();
+//
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+//
+//        itemService.saveItem(book);
 
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);
+        // 어설픈 엔티티 생성 보다는 아래 한 줄이 훨씬 깔끔하고 좋은 방법.
+        // 혹 바꿔야 하는 필드가 많을 경우, DTO를 만들어서 통째로 보낸다.
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
         return "redirect:/items";
     }
 }
